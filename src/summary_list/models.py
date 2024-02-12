@@ -15,5 +15,6 @@ summary = Table(
     Column('enployment', String),
     Column('schedule', String),
     Column('education', String),
-    Column('languages', ARRAY(String))
+    Column('languages', ARRAY(String)),
+    Column('about', String)
 )

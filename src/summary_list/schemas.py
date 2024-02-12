@@ -47,4 +47,4 @@ class Summary(BaseModel):
     schedule: Schedule
     education: Education
     languages: List[str] = ['Russian', 'English']
-    
+    about: str
