@@ -7,7 +7,7 @@ summary = Table(
     'summary',
     metadata,
     Column('id', Integer, primary_key=True),
-    Column('name', String),
+    Column('name', ARRAY(String)),
     Column('phone', String),
     Column('email', String),
     Column('work_exp', Integer),
