@@ -41,8 +41,8 @@ class Summary(BaseModel):
     name: List[FullName]
     phone: str = Field(min_length=11, max_length=16, default='8-800-555-35-35')
     email: EmailStr = Field(default='example@example.com')
-    work_exp: int = Field(gt=0, default='0')
-    age: int = Field(gt=18, default='18')
+    work_exp: int = Field(ge=0, default='0')
+    age: int = Field(ge=18, default='18')
     enployment: Enployment
     schedule: Schedule
     education: Education
