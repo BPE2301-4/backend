@@ -1,7 +1,13 @@
-import uvicorn
 from fastapi import FastAPI
+from .resume_list import router as list_router
+
 
 app = FastAPI(title='testname_summary')
 
-if __name__ == '__main__':
-    uvicorn.run('main:app', reload=True)
+
+@app.get('/')
+def root():
+    return 'hello!'
+
+
+app.include_router(list_router)
