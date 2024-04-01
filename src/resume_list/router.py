@@ -1,8 +1,8 @@
 # import external libraries
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 # import from actual folder
 from . import view
-from .models import Resume as table_resume
+from .models import Resume as table_resumes
 from .schemas import Resume as scheme_resume
 
 router = APIRouter(
