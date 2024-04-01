@@ -1,12 +1,11 @@
 # import external libraries
 from fastapi import FastAPI
-# import from folder 'resume_list' via __init__
+# import from folder 'src/resume_list/' via __init__
 from .resume_list import router as resume_list_router
-# import from folder 'configurator' via __init__
+# import from folder 'src/configurator/' via __init__
 from .configurator import router as configurator_router
-# import from actual folder
-from .database import init_db
-from .resume_list import Resume
+# import from folder 'src/core/' via __init__
+from .core import init_db
 
 app = FastAPI(
     title='JobJotter'
@@ -16,12 +15,6 @@ app = FastAPI(
 @app.get('/init_database')
 def init_database():
     init_db()
-
-
-app.include_router(
-    resume_list_router,
-    prefix='/public'
-)
 
 
 app.include_router(

@@ -1,16 +1,14 @@
-from .schemas import Resume
+# importt extternal libraries
 from fastapi import APIRouter
-from src.configurator import create_prompt
+# import from folder 'src/core/' via __init__
+from ..core import Resume
+# import from folder 'src/configurator/'
+from ..configurator import create_prompt
 
 router = APIRouter(
     prefix='/configurator',
     tags=['ChatGPT Powered']
 )
-
-
-@router.get('/')
-def get_prompt(prompt: str):
-    return create_prompt.get_prompt(prompt=prompt)
 
 
 @router.post('/create')

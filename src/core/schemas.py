@@ -24,15 +24,15 @@ class Resume(BaseModel):
     name: str = 'Антонов Антон Антонович'
     phone: str = Field(min_length=11, max_length=16, default='8-800-555-35-35')
     email: EmailStr = Field(default='example@example.com')
-    work_exp: str = Field(default='Отсутствует')  # поменять на строку или переработать
-    birth_date: datetime.date = Field(default=datetime.date(2000, 1, 1))  # поменять на дату рождения
+    work_exp: str = Field(default='Отсутствует')
+    birth_date: datetime.date = Field(default=datetime.date(2000, 1, 1))
     city: str = Field(default='Москва')
     citizenship: str = Field(default='РФ')
     post: str = Field(default='Мерчендайзер')
     salary: str = Field(default='40000 руб.')
     enployment: Enployment = Enployment.full
     schedule: Schedule = Schedule.full
-    education: str = Field(default='Среднее полное')  # поменять на строку или доработать
+    education: str = Field(default='Среднее полное')
     about: str = ''
 
     def configue_prompt(self):
@@ -58,3 +58,4 @@ class Resume(BaseModel):
     Так же более точно и с пояснениями оформи пункт 4 , добавив туда названия полей для различной информации , \
     пункт 11  так же оформи более точно , с добавлением полей для разграничения информации , \
     а пункт 13 дополни соответствующими для профессии , указанной в пункте 8 , навыками.'
+    

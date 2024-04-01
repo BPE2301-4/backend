@@ -1,20 +1,14 @@
+# import external libraries
 from openai import OpenAI
+# import from folder 'src/' via __init__
 from src import TOKEN
-from .schemas import Resume
+# import from folder 'src/core' via __init__
+from ..core import Resume
 
 
 client = OpenAI(
     api_key=f'{TOKEN}'
 )
-
-
-def get_prompt(prompt: str):
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content": "Ты знаешь ответ на любой вопрос !"},
-                  {"role": "user", "content": prompt}]
-    )
-    return completion.choices[0].delta.content
 
 
 def get_resume(resume_param: Resume):
