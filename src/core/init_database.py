@@ -5,6 +5,5 @@ from .models.base import Base
 
 
 def init_db():
-    with engine.begin() as conn:
-        conn(Base.metadata.drop_all)
-        conn(Base.metadata.create_all)
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)

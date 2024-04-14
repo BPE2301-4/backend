@@ -44,3 +44,5 @@ urllib3==2.2.1
 uvicorn==0.29.0
 wcwidth==0.2.13
 yarl==1.9.4
+beautifulsoup4~=4.12.3
+pillow~=10.3.0

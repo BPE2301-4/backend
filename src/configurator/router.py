@@ -1,9 +1,7 @@
-# importt extternal libraries
+# import external libraries
 from fastapi import APIRouter
-# import from folder 'src/core/' via __init__
+from . import create_pdf
 from ..core import Resume
-# import from folder 'src/configurator/'
-from ..configurator import create_prompt
 
 router = APIRouter(
     prefix='/configurator',
@@ -12,5 +10,5 @@ router = APIRouter(
 
 
 @router.post('/create')
-def get_resume(resume_param: Resume):
-    return create_prompt.get_resume(resume_param=resume_param)
+def create_resume(resume: Resume, template_image: int):
+    return create_pdf.generate_pdf(resume=resume, template_image=template_image)

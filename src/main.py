@@ -21,3 +21,8 @@ app.include_router(
     configurator_router,
     prefix='/public'
 )
+
+
+app.include_router(
+    resume_list_router
+)
