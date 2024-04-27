@@ -5,7 +5,7 @@ from ..core import Resume
 
 router = APIRouter(
     prefix='/configurator',
-    tags=['ChatGPT Powered']
+    tags=['Create your own resume and download it as PDF-file']
 )
 
 

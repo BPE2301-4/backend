@@ -6,6 +6,8 @@ from .resume_list import router as resume_list_router
 from .configurator import router as configurator_router
 # import from folder 'src/core/' via __init__
 from .core import init_db
+# import from folder 'src/analysis/' via __init__
+from .analysis import router as analisys_router
 
 app = FastAPI(
     title='JobJotter'
@@ -25,4 +27,8 @@ app.include_router(
 
 app.include_router(
     resume_list_router
+)
+
+app.include_router(
+    analisys_router
 )
