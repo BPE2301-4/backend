@@ -22,8 +22,13 @@ class Schedule(Enum):
     watch = 'Вахтовый метод'  # вахтовый метод
 
 
+class Avatar:
+    file: Optional[bytes] = None
+    url: Optional[str] = None
+
+
 class Resume(BaseModel):
-    avatar: Optional[UploadFile] = None
+    avatar: Optional[Avatar] = None
     name: str = 'Антонов Антон Антонович'
     phone: str = Field(min_length=11, max_length=16, default='8-800-555-35-35')
     email: EmailStr = Field(default='example@example.com')
