@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+from ..core import session
 from ..core import Resume, Url
 
 resume_url = 'https://hh.ru/resume/abcdef123456'

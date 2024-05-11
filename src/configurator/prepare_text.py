@@ -3,36 +3,46 @@ from ..core import Resume
 
 def left_column(resume: Resume):
     text_to_write = f"""
-    Имя: 
-    {resume.name}
-    Телефон: 
-    {resume.phone}
-    Email: 
-    {resume.email}
-    Дата рождения: 
-    {resume.birth_date}
-    
+    — {resume.phone}\n
+    \n
+    — {resume.email}\n
+    \n
     """
     if resume.city:
-        text_to_write += (f"Город:\n"
-                          f"{resume.city}\n"
-                          f"\n")
+        text_to_write += f"""
+            {resume.city}
+            """
     if resume.citizenship:
-        text_to_write += (f"Гражданство:\n"
-                          f"{resume.citizenship}\n"
-                          f"\n")
+        text_to_write += f""" ,{resume.citizenship}\n"""
+    if resume.skills:
+        text_to_write += f"""Навыки\n
+            \n
+            """
+        for i in resume.skills:
+            text_to_write += f"""
+                {i.skill}\n
+                \n
+                {i.lvl}\n
+                \n
+                """
+    if resume.languages:
+        text_to_write += f"""Языки\n
+            \n
+            """
+        for i in resume.languages:
+            text_to_write += f"""
+                {i.lang} ({i.lvl})\n
+                \n
+                """
     return text_to_write
 
 
 def right_column(resume: Resume):
     text_to_write = f"""
-        Опыт работы:\n {resume.work_exp}
-        Должность:\n {resume.post}
-        Заработная плата:\n {resume.salary}
-        Занятость:\n {resume.employment}
-        График:\n {resume.schedule}
-        Образование:\n {resume.education}
+        {resume.name.surname} {resume.name.name} {resume.name.patronymic}\n
+        {resume.post}, предпочитаемая зп: {resume.salary}\n
+        \n
         """
-    if resume.about:
-        text_to_write += f"О себе: {resume.about}\n"
+    if resume.add_inf:
+        text_to_write += f"О себе: {resume.add_inf}\n"
     return text_to_write
