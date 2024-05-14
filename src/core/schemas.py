@@ -102,3 +102,18 @@ class Resume(BaseModel):
     driver_lic: Optional[List[DriverLicense]]
     skills: Optional[List[Skills]]
     add_inf: Optional[str]
+
+class ResumeForTable(BaseModel):
+    name: str = ''
+    email: EmailStr = 'example@example.com'
+    phone: str = ''
+    work_exp: str = ''
+    birth_date: date = date(2020, 10, 10)
+    city: str = ''
+    citizenship: str = ''
+    post: str = ''
+    salary: str = ''
+    employment: Employment = Employment.full
+    schedule: Schedule = Schedule.full
+    education: str = ''
+    about: str = ''
