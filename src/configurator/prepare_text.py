@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from ..core import Resume, Text, Font
+from ..core import Resume, Font, Text
 
 
 def left_column(resume: Resume):
