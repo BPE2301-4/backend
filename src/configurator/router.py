@@ -2,9 +2,9 @@
 import asyncio
 
 from . import create_pdf
-from ..core import Resume, Employment, Schedule, Avatar, Name, WorkExp, Education, Languages, Skills, DriverLicense, work_exp_scheme
+from ..core import Resume, Employment, Schedule, Avatar, Name, WorkExp, Education, Languages, Skills, DriverLicense
 from fastapi import Form, File, UploadFile, APIRouter
-from typing import Optional, List, Annotated
+from typing import Optional, List
 from pydantic import EmailStr
 from datetime import date
 from io import BytesIO
@@ -19,36 +19,40 @@ router = APIRouter(
 
 @router.post('/create')
 def submit_resume(
-        surname: Annotated[str, Form(..., example='Антонов')],
-        name: str = Form(..., example='Антон'),
-        patronymic: Optional[str] = Form(None, example='Антонович'),
-        phone: str = Form(default='8-800-555-35-35', min_length=11, max_length=16),
-        email: EmailStr = Form(default='example@example.com'),
-        work_exp: Optional[List[WorkExp]] = work_exp_scheme,
-        birth_date: Optional[date] = Form(format="%Y-%m-%d"),
+        surname: str = Form(...),
+        name: str = Form(...),
+        patronymic: Optional[str] = Form(None),
+        phone: str = Form(...),
+        email: EmailStr = Form(...),
+        work_exp: Optional[str] = Form(None),  # We will parse this from JSON
+        birth_date: Optional[date] = Form(None),
         city: Optional[str] = Form(None),
         citizenship: Optional[str] = Form(None),
-        post: Optional[str] = Form(default='Мерчендайзер'),
-        salary: Optional[str] = Form(default='40000 руб.'),
-        employment: Optional[Employment] = Form(
-            examples=[Employment.full, Employment.project, Employment.partial, Employment.intership,
-                      Employment.volunteering]),
-        schedule: Optional[Schedule] = Form(
-            examples=[Schedule.full, Schedule.shift, Schedule.watch, Schedule.remote, Schedule.flexible]),
-        education: Optional[List[Education]] = Form(...),
-        languages: Optional[List[Languages]] = Form(...),
-        driver_lic: Optional[List[DriverLicense]] = Form(...),
-        skills: Optional[list[Skills]] = Form(...),
-        add_inf: Optional[str] = Form(...),
+        post: Optional[str] = Form(None),
+        salary: Optional[str] = Form(None),
+        employment: Optional[Employment] = Form(None),
+        schedule: Optional[Schedule] = Form(None),
+        education: Optional[str] = Form(None),  # We will parse this from JSON
+        languages: Optional[str] = Form(None),  # We will parse this from JSON
+        driver_lic: Optional[str] = Form(None),  # We will parse this from JSON
+        skills: Optional[str] = Form(None),  # We will parse this from JSON
+        add_inf: Optional[str] = Form(None),
         avatar_file: UploadFile = File(None),
         avatar_url: Optional[str] = Form(None),
         template_image: int = Form(...)
 ):
+    import json
+    work_exp_list = json.loads(work_exp) if work_exp else None
+    education_list = json.loads(education) if education else None
+    languages_list = json.loads(languages) if languages else None
+    driver_lic_list = json.loads(driver_lic) if driver_lic else None
+    skills_list = json.loads(skills) if skills else None
+
     resume = Resume(
         name=Name(surname=surname, name=name, patronymic=patronymic),
         phone=phone,
         email=email,
-        work_exp=work_exp,
+        work_exp=work_exp_list,
         birth_date=birth_date,
         city=city,
         citizenship=citizenship,
@@ -56,10 +60,10 @@ def submit_resume(
         salary=salary,
         employment=employment,
         schedule=schedule,
-        education=education,
-        languages=languages,
-        driver_lic=driver_lic,
-        skills=skills,
+        education=education_list,
+        languages=languages_list,
+        driver_lic=driver_lic_list,
+        skills=skills_list,
         add_inf=add_inf
     )
     if avatar_file:
@@ -68,6 +72,7 @@ def submit_resume(
         else:
             async def read_avatar_file():
                 return await avatar_file.read()
+
             content = asyncio.run(read_avatar_file())
             image_bytes = BytesIO(content)
             avatar = Avatar(file=image_bytes.getvalue())

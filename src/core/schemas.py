@@ -2,8 +2,23 @@
 from enum import Enum
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
-from fastapi import UploadFile
 from datetime import date
+from PIL import ImageFont
+from .resume_templates import font_path
+
+
+class Font(Enum):
+    bold_left = ImageFont.truetype(font_path.medium, 44)
+    smpl_left = ImageFont.truetype(font_path.light, 38)
+    bold_right = ImageFont.truetype(font_path.medium, 54)
+    smpl_right = ImageFont.truetype(font_path.light, 48)
+    name = ImageFont.truetype(font_path.bold, 80)
+
+
+class Text(BaseModel):
+    text: str
+    text_padding: int
+    text_font: Font
 
 
 class Employment(Enum):
@@ -102,6 +117,7 @@ class Resume(BaseModel):
     driver_lic: Optional[List[DriverLicense]]
     skills: Optional[List[Skills]]
     add_inf: Optional[str]
+
 
 class ResumeForTable(BaseModel):
     name: str = ''
