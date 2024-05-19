@@ -3,6 +3,7 @@ from .database import engine
 # import from folder 'src/core/models/'
 from .models.base import Base
 
+
 def init_db():
     try:
         Base.metadata.drop_all(engine)
