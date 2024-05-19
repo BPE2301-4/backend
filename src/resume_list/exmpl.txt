@@ -1,0 +1,57 @@
+import requests
+from bs4 import BeautifulSoup
+from sqlalchemy import create_engine, Column, String, Date, Integer, Text
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+# Создаем базу данных SQLAlchemy
+Base = declarative_base()
+
+# Создаем класс модели для хранения резюме
+class Resume(Base):
+    __tablename__ = 'resumes'
+    id = Column(Integer, primary_key=True)
+    full_name = Column(String)
+    email = Column(String)
+    phone_number = Column(String)
+    birth_date = Column(Date)
+    city = Column(String)
+    citizenship = Column(String)
+    position = Column(String)
+    salary = Column(Integer)
+    work_schedule = Column(String)
+    education = Column(Text)
+    experience = Column(Text)
+    skills = Column(Text)
+
+# Устанавливаем соединение с базой данных PostgreSQL
+db_url = 'postgresql://username:password@localhost/database_name'
+engine = create_engine(db_url)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Функция для парсинга резюме и сохранения в базу данных
+def parse_and_save_resume(resume_url):
+    response = requests.get(resume_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Извлекаем данные из резюме
+        # Здесь необходимо написать код для извлечения данных из HTML-кода страницы
+        # Пример: full_name = soup.find('span', {'class': 'resume-header-name'}).text.strip()
+        
+        # Создаем экземпляр модели и сохраняем в базу данных
+        resume = Resume(full_name=full_name, email=email, phone_number=phone_number,
+                        birth_date=birth_date, city=city, citizenship=citizenship,
+                        position=position, salary=salary, work_schedule=work_schedule,
+                        education=education, experience=experience, skills=skills)
+        session.add(resume)
+        session.commit()
+        print("Резюме успешно сохранено в базу данных.")
+    else:
+        print("Не удалось получить резюме. Код состояния:", response.status_code)
+
+# Пример использования
+if __name__ == "__main__":
+    resume_url = 'https://hh.ru/resume/abcdef123456'  # Замените на URL резюме, которое хотите спарсить и сохранить
+    parse_and_save_resume(resume_url)
