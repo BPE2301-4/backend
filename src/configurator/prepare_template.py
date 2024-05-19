@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 from pathlib import Path
 from io import BytesIO
 from fastapi import HTTPException

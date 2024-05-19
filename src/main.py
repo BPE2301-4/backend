@@ -20,8 +20,7 @@ def init_database():
 
 
 app.include_router(
-    configurator_router,
-    prefix='/public'
+    configurator_router
 )
 
 

@@ -10,10 +10,6 @@ DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 metadata = Base.metadata
 
-try:
-    engine = create_engine(DATABASE_URL)
-    Session = sessionmaker(engine, expire_on_commit=False)
-    session = Session()
-    print("Database connection established successfully!")
-except Exception as e:
-    print(f"Error establishing database connection: {e}")
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(engine, expire_on_commit=False)
+session = Session()
