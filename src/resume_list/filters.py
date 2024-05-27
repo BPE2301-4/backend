@@ -4,20 +4,20 @@ from sqlalchemy import select, and_
 
 def filter(post: str | None=None, schedule: Schedule | None=None, education: str | None=None):
     if post == None and schedule == None and education != None:
-        filtered_table = session.query(ResumeTable).filter(ResumeTable.education == education)
+        return session.query(ResumeTable).where(ResumeTable.education == education)
     elif post == None and schedule != None and education == None:
-        filtered_table = session.query(ResumeTable).filter(ResumeTable.schedule == schedule)
+        return session.query(ResumeTable).where(ResumeTable.schedule == schedule)
     elif post != None and schedule == None and education == None:
-        filtered_table = session.query(ResumeTable).filter(ResumeTable.post == post)
+        return session.query(ResumeTable).where(ResumeTable.post == post)
     elif post != None and schedule != None and education == None:
-        filtered_table = session.query(ResumeTable).filter(and_(ResumeTable.post == post, ResumeTable.schedule == schedule))
+        return session.query(ResumeTable).where(and_(ResumeTable.post == post, ResumeTable.schedule == schedule))
     elif post != None and schedule == None and education != None:
-        filtered_table = session.query(ResumeTable).filter(and_(ResumeTable.post == post, ResumeTable.education == education))
+        return session.query(ResumeTable).where(and_(ResumeTable.post == post, ResumeTable.education == education))
     elif post == None and schedule != None and education != None:
-        filtered_table = session.query(ResumeTable).filter(and_(ResumeTable.schedule == schedule, ResumeTable == education))
+        return session.query(ResumeTable).where(and_(ResumeTable.schedule == schedule, ResumeTable == education))
     elif post == None and schedule == None and education == None:
-        filtered_table = session.query(ResumeTable).all()
+        return session.query(ResumeTable)
     else:
-        filtered_table = session.query(ResumeTable).filter(and_(ResumeTable.post== post, ResumeTable.schedule == schedule, ResumeTable.education == education))
-    filtered = session.execute(filtered_table)
-    return filtered
+        return session.query(ResumeTable).where(and_(ResumeTable.post== post, ResumeTable.schedule == schedule, ResumeTable.education == education))
+    #filtered = session.execute(filtered_table)
+    #return filtered_table

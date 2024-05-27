@@ -3,12 +3,11 @@ from sqlalchemy import select
 
 
 def all_or_one_resumes(id: int | None = None):
-    if id == 'None':
+    if id is None:
         return session.query(ResumeTable).all()
     else:
-        one_resume = select(ResumeTable).filter(ResumeTable.id == id)
-        result = session.execute(one_resume)
-        return result.all()     
+        one_resume = session.query(ResumeTable).filter(ResumeTable.id == id).first()
+        return one_resume
 
 def create_resume(new_resume: ResumeForTable):
     resume = ResumeTable(
@@ -28,4 +27,4 @@ def create_resume(new_resume: ResumeForTable):
     )
     session.add(resume)
     session.commit()
-    return new_resume
+    return resume
